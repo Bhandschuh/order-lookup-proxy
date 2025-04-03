@@ -7,7 +7,8 @@ app.use(express.json());
 const SHOPIFY_API_URL = 'https://thick-quality-glass.myshopify.com/admin/api/2023-10';
 const ADMIN_API_TOKEN = process.env.SHOPIFY_ADMIN_API_TOKEN;
 
-console.log('Starting server with token:', ADMIN_API_TOKEN); // Debug log at startup
+console.log('All environment variables:', process.env); // Debug: Log all env vars
+console.log('Starting server with token:', ADMIN_API_TOKEN);
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://thick-quality-glass.myshopify.com');
@@ -23,8 +24,9 @@ app.post('/order-lookup', async (req, res) => {
     return res.status(400).json({ error: 'Email and order number are required' });
   }
 
-  console.log('Request received:', { email, orderNumber }); // Debug log for request
-  console.log('Using token for request:', ADMIN_API_TOKEN); // Debug log for token
+  console.log('Request received:', { email, orderNumber });
+  console.log('Using token for request:', ADMIN_API_TOKEN);
+  console.log('Request headers:', { 'X-Shopify-Access-Token': ADMIN_API_TOKEN });
 
   try {
     const response = await axios.get(`${SHOPIFY_API_URL}/orders.json`, {
@@ -32,7 +34,7 @@ app.post('/order-lookup', async (req, res) => {
       params: { email, name: `#${orderNumber}`, status: 'any', limit: 1 }
     });
 
-    console.log('Shopify API response:', response.data); // Debug log for response
+    console.log('Shopify API response:', response.data);
 
     const orders = response.data.orders;
     if (!orders || !orders.length) {
