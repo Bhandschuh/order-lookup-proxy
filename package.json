@@ -1,0 +1,17 @@
+{
+  "name": "order-lookup-proxy",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@shopify/shopify-api": "^8.0.0",
+    "axios": "^1.8.4",
+    "express": "^5.1.0"
+  }
+}
